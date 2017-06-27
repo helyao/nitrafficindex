@@ -11,16 +11,18 @@ from TrafficScrapy import settings
 
 class TrafficscrapyPipeline(object):
 
+    # def __init__(self):
+    #     self.connect = pymysql.connect(
+    #         host=settings.MYSQL_HOST,
+    #         port=settings.MYSQL_PORT,
+    #         user=settings.MYSQL_USER,
+    #         passwd=settings.MYSQL_PASSWD,
+    #         db=settings.MYSQL_DATABASE
+    #     )
+    #     self.cursor = self.connect.cursor()
+    #     self.table_name = settings.MYSQL_TABLE_INFO
     def __init__(self):
-        self.connect = pymysql.connect(
-            host=settings.MYSQL_HOST,
-            port=settings.MYSQL_PORT,
-            user=settings.MYSQL_USER,
-            passwd=settings.MYSQL_PASSWD,
-            db=settings.MYSQL_DATABASE
-        )
-        self.cursor = self.connect.cursor()
-        self.table_name = settings.MYSQL_TABLE_INFO
+        print('host={host}, port={port}'.format(host=settings.MYSQL_HOST, port=settings.MYSQL_PORT))
 
     def process_item(self, item, spider):
         try:
@@ -33,8 +35,9 @@ class TrafficscrapyPipeline(object):
                             time=item['time'], roadGrade=item['roadGrade'], avgspeed=item['avgspeed'],
                             sIndex=item['sIndex'], cIndex=item['cIndex'], bIndex=item['bIndex'],
                             dir=item['dir'], rticLonlats=item['rticLonlats'], rticId=item['rticId'], vkt=item['vkt'])
-            self.cursor.execute(sql)
-            self.connect.commit()
+            print(sql)
+            # self.cursor.execute(sql)
+            # self.connect.commit()
         except:
             pass
         return item

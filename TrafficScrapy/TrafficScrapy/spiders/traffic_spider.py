@@ -43,7 +43,7 @@ class MobikeSpider(scrapy.Spider):
     def start_requests(self):
         for item in range(1, MAX_PAGE):
             body = self.__getDynamicBody(item)
-            yield FormRequest(url=self.url, formdata=body, headers=self.headers, callback=self.parse, errback=self.parse_error)
+            yield FormRequest(url=self.url, formdata=body, headers=self.headers, callback=self.parse)
 
     def parse(self, response):
         results = json.loads(response.body.decode('utf-8'))
