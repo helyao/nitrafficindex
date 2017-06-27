@@ -16,14 +16,14 @@ NEWSPIDER_MODULE = 'TrafficScrapy.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'TrafficScrapy (+http://www.yourdomain.com)'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.109 Safari/537.36'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
 # Mysql database configure settings
 MYSQL_HOST = '127.0.0.1'
-MYSQL_PORT = 27017
+MYSQL_PORT = 3306
 MYSQL_USER = 'root'
 MYSQL_PASSWD = 'welcome'
 MYSQL_DATABASE = 'traffic'
