@@ -21,6 +21,15 @@ NEWSPIDER_MODULE = 'TrafficScrapy.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+# Mysql database configure settings
+MYSQL_HOST = '127.0.0.1'
+MYSQL_PORT = 27017
+MYSQL_USER = 'root'
+MYSQL_PASSWD = 'welcome'
+MYSQL_DATABASE = 'traffic'
+MYSQL_TABLE_ERROR = 'tra_error'
+MYSQL_TABLE_INFO = 'tra_info'
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
@@ -64,9 +73,9 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'TrafficScrapy.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'TrafficScrapy.pipelines.TrafficscrapyPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

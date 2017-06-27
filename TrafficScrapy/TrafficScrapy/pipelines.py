@@ -6,15 +6,23 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import pymysql
-from .config import UserConfig
+from .basefunc import GetTimeStamp
 
 class TrafficscrapyPipeline(object):
 
-    def __init__(self):
-        self.connect = pymysql.connect(host=UserConfig['mysql_host'], port=UserConfig['mysql_port'],
-                                       user=UserConfig['mysql_user'], passwd=UserConfig['mysql_passwd'],
-                                       db=UserConfig['mysql_database'])
-        self.cursor = self.connect.cursor()
+    def __init__(self, connect, table_info):
+        self.connect = connect
+        self.cursor = connect.cursor()
+        self.table_info = table_info
+
+    # Get Mysql Connection from settings.py
+    @classmethod
+    def from_settings(cls, settings):
+        connect = pymysql.connect(host=settings['MYSQL_HOST'], port=settings['MYSQL_PORT'],
+                                  user=settings['MYSQL_USER'], passwd=settings['MYSQL_PASSWD'],
+                                  db=settings)
+        table_info = settings['MYSQL_TABLE_INFO'] + '_' + GetTimeStamp()
+        return cls(connect, table_info)
 
     def process_item(self, item, spider):
         sql = 'INSERT INTO tra_info(`id`, `name`, `startName`, `endName`, `time`, `roadGrade`, `avgspeed`, ' \
