@@ -22,6 +22,7 @@ class TrafficscrapyPipeline(object):
     #     self.cursor = self.connect.cursor()
     #     self.table_name = settings.MYSQL_TABLE_INFO
     def __init__(self):
+        self.table_name = settings.MYSQL_TABLE_INFO
         print('host={host}, port={port}'.format(host=settings.MYSQL_HOST, port=settings.MYSQL_PORT))
 
     def process_item(self, item, spider):
