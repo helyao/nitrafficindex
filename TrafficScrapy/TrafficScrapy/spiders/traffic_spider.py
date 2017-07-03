@@ -46,7 +46,7 @@ class MobikeSpider(scrapy.Spider):
             yield FormRequest(url=self.url, formdata=body, headers=self.headers, callback=self.parse)
 
     def parse(self, response):
-        results = json.loads(response.body.decode('utf-8'))
+        results = json.loads(response.body)
         date = results['date']
         for row in results['rows']:
             item = TrafficscrapyItem()

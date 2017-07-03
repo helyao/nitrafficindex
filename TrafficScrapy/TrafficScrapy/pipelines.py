@@ -16,22 +16,22 @@ class TrafficscrapyPipeline(object):
             port=settings.MYSQL_PORT,
             user=settings.MYSQL_USER,
             passwd=settings.MYSQL_PASSWD,
-            db=settings.MYSQL_DATABASE
+            db=settings.MYSQL_DATABASE,
+            use_unicode=True,
+            charset="utf8"
         )
         self.cursor = self.connect.cursor()
         self.table_name = settings.MYSQL_TABLE_INFO
 
     def process_item(self, item, spider):
         try:
-            sql = 'INSERT INTO {table_name}(`id`, `name`, `startName`, `endName`, `time`, `roadGrade`, `avgspeed`, ' \
+            sql = 'INSERT INTO %s(`id`, `name`, `startName`, `endName`, `time`, `roadGrade`, `avgspeed`, ' \
                   '`sIndex`, `cIndex`, `bIndex`, `dir`, `rticLonlats`, `rticId`, `vkt`) ' \
-                  'VALUES("{id}", "{name}", "{startName}", "{endName}", "{time}", {roadGrade}, {avgspeed}, {sIndex}, {cIndex}, ' \
-                  '{bIndex}, "{dir}", "{rticLonlats}", "{rticId}", "{vkt}")' \
-                  ''.format(table_name=self.table_name,
-                            id=item['id'], name=item['name'], startName=item['startName'], endName=item['endName'],
-                            time=item['time'], roadGrade=item['roadGrade'], avgspeed=item['avgspeed'],
-                            sIndex=item['sIndex'], cIndex=item['cIndex'], bIndex=item['bIndex'],
-                            dir=item['dir'], rticLonlats=item['rticLonlats'], rticId=item['rticId'], vkt=item['vkt'])
+                  'VALUES("%s", "%s", "%s", "%s", "%s", %s, %s, %s, %s, %s, ' \
+                  '"%s", "%s", "%s", "%s")' % (self.table_name, item['id'], item['name'], item['startName'],
+                                               item['endName'], item['time'], item['roadGrade'], item['avgspeed'],
+                                               item['sIndex'], item['cIndex'], item['bIndex'], item['dir'],
+                                               item['rticLonlats'], item['rticId'], item['vkt'])
             # print(sql)
             self.cursor.execute(sql)
             self.connect.commit()
